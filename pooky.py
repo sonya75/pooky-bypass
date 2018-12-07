@@ -56,7 +56,7 @@ def generate_cookies():
     x=str(int(time.time()*1000))
     y=""
     for p in x:
-        y+=str(random.randint(1,9))
+        y+=str(random.randint(0,8))
         y+=p
-    cookies["pooky_mouse"]=encrypt(y,[ord(j) for j in os.urandom(16)])
+    cookies["pooky_mouse"]=encrypt(y.decode('hex'),[ord(j) for j in os.urandom(16)])
     return cookies
