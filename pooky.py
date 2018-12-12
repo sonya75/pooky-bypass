@@ -1,5 +1,5 @@
 from Crypto.Cipher import AES
-import random,time,os
+import random,time,os,uuid
 def decwithiv(key,data,iv):
     m=AES.new(key,AES.MODE_ECB)
     data=m.decrypt(data)
@@ -60,4 +60,6 @@ def generate_cookies():
         y+=str(random.randint(0,8))
         y+=p
     cookies["pooky_mouse"]=encrypt(y.decode('hex'),[ord(j) for j in os.urandom(16)])
+    cookies["pooky"]=str(uuid.uuid4())
+    cookies["pooky_performance"]=encrypt(cookies["pooky"].replace("-","")[::-1].decode('hex'))
     return cookies
