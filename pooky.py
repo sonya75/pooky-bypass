@@ -1,3 +1,10 @@
+
+from sys import platform as _platform
+if _platform == 'darwin':
+    import crypto
+    sys.modules['Crypto'] = crypto
+
+
 from Crypto.Cipher import AES
 import random,time,os,uuid
 def decwithiv(key,data,iv):
@@ -61,5 +68,5 @@ def generate_cookies():
         y+=p
     cookies["pooky_mouse"]=encrypt(y.decode('hex'),[ord(j) for j in os.urandom(16)])
     cookies["pooky"]=str(uuid.uuid4())
-    cookies["pooky_performance"]=encrypt(cookies["pooky"].replace("-","")[::-1].decode('hex'))
+    cookies["pooky_performance"]=encrypt(cookies["pooky"].replace("-","")[::-1].decode('hex'), [ord(j) for j in os.urandom(16)])
     return cookies
